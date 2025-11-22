@@ -1,0 +1,422 @@
+# import json
+# import random 
+# import string
+# from pathlib import Path
+# class Bank:
+#     __database="data.json"
+#     data=[]
+#     try:
+#         if Path(__database).exists():
+#             with open(__database) as fs:
+#                 data=json.loads(fs.read())
+#     except Exception as err:
+#         print(f"error occured as {err}")
+    
+#     @classmethod
+#     def Generate_acc(cls):
+#         alpha=random.choices(string.ascii_letters,k=4)
+#         digit=random.choices(string.digits,k=8)
+#         id=alpha+digit
+#         random.shuffle(id)
+#         return "".join(id)
+#     @classmethod
+#     def update_data(cls):
+#         with open(cls.__database,'w') as fs:
+#             json.dump(cls.data,fs)
+
+#     def createuser(self):
+#         info={
+#             "name":input("enter your name : "),
+#             "email":input("enter your email : "),
+#             "age":int(input("enter your age : ")),
+#             "phonenumber":input("enter your phone number : "),
+#             "pin":input("enter your pin : "),
+#             "account" :Bank.Generate_acc(),
+#             "balance":0
+#         }
+    
+#         if info["age"]<18:    
+#             print("your account cannot be created underage")
+
+#         elif(len(info["phonenumber"])!=10 or len(info["pin"])!=4):
+#             print("invalid input please try again")
+
+#         else:
+#             print(f"please keep your account number safe, your account number is {info['account']}")
+#             Bank.data.append(info)
+#             Bank.update_data()
+
+#     def deposit_money(self):
+#         ac=input("Enter your account number : ")
+#         pin=input("enter your pin : ")
+#         userdata=[i for i in Bank.data if i["account"]==ac and i["pin"]==pin]
+#         # for i in Bank.data:
+#         #     if i["account"]==ac and i["pin"]==pin:
+#         #         userdata=i
+#         #         break
+#         if not userdata:
+#             print("No data found for this user ")
+#         else:
+#             amount=int(input("Enter your amount : "))
+#             if amount<500:
+#                 print("Amount is less than 500")
+#             elif amount>10000:
+#                 print("amount is greater than 10000")
+#             else:
+#                 userdata[0]["balance"]+=amount
+#                 Bank.update_data()
+#                 print("balance updated")
+
+#     def withdrawl_money(self):
+#         ac=input("Enter your account number : ")
+#         pin=input("enter your pin : ")
+#         userdata=[i for i in Bank.data if i["account"]==ac and i["pin"]==pin]
+#         if not userdata:
+#             print("No data found for this user ")
+#         else:
+#             amount=int(input("Enter your amount : "))
+#             if amount<500:
+#                 print("Amount is less than 500")
+#             elif amount>10000:
+#                 print("amount is greater than 10000")
+#             else:
+#                 if userdata[0]["balance"]<amount:
+#                     print("Insufficient amount")
+#                 else:
+#                     userdata[0]["balance"]-=amount
+#                     Bank.update_data()
+#                     print("money withdrawl,balance updated")
+
+#     def details(self):
+#         ac=input("Enter your account number : ")
+#         pin=input("enter your pin : ")
+#         userdata=[i for i in Bank.data if i["account"]==ac and i["pin"]==pin]
+#         if not userdata:
+#             print("No data found for this user ")
+#         else: 
+#             for i in userdata[0]:
+#                 print(f"{i} -> {userdata[0][i]}")
+
+#     def update_user(self):
+#         ac=input("Enter your account number : ")
+#         pin=input("enter your pin : ")
+#         userdata=[i for i in Bank.data if i["account"]==ac and i["pin"]==pin]
+#         if not userdata:
+#             print("No data found for this user ")
+#         else: 
+#             print("you can not change your account number")
+#             print("now update your details and skip it if you don't want to change")
+#             newdata={
+#                 "name":input("enter your name : "),
+#                 "age":input("enter your age : "),
+#                 "email":input("enter your email : "),
+#                 "phonenumber":input("enter your number : "),
+#                 "pin":input("enter your pin : ")
+#             }
+#             if newdata["name"]=="":
+#                 newdata["name"]=userdata[0]["name"]
+#             if newdata["age"]=="":
+#                 newdata["age"]=userdata[0]["age"]
+#             if newdata["email"]=="":
+#                 newdata["email"]=userdata[0]["email"]
+#             if newdata["phonenumber"]=="":
+#                 newdata["phonenumber"]=userdata[0]["phonenumber"]
+#             if newdata["pin"]=="":
+#                 newdata["pin"]=userdata[0]["pin"]
+#             newdata["account"]=userdata[0]["account"]
+#             newdata["balance"]=userdata[0]["balance"]
+
+#             for i in userdata[0]:
+#                 if userdata[0][i]==newdata[i]:
+#                     continue
+#                 else:
+#                     if newdata[i].isnumeric():
+#                         userdata[0][i]=int(newdata[i])
+#                     else:
+#                         userdata[0][i]=newdata[i]
+
+#         Bank.update_data()
+#         print("Details updated successfully!!")
+
+#     def delete_user(self):
+#         ac=input("Enter your account number : ")
+#         pin=input("enter your pin : ")
+#         userdata=[i for i in Bank.data if i["account"]==ac and i["pin"]==pin]
+#         if not userdata:
+#             print("No data found for this user ")
+#         else: 
+#             Bank.data.remove(userdata[0])
+#             Bank.update_data()
+#             print("account deleted !!")
+
+# bank=Bank()
+# check=int(input("""
+# press 1 for creating a new user account
+# press 2 for depositing money
+# press 3 for withdrawl money
+# press 4 for your details
+# press 5 to update your details
+# press 6 to delete user
+# enter your response
+# """))
+
+# if check==1:
+#     bank.createuser()
+
+# if check==2:
+#     bank.deposit_money()
+
+# if check==3:
+#     bank.withdrawl_money()
+
+# if check==4:
+#     bank.details()
+
+# if check==5:
+#     bank.update_user()
+
+# if check==6:
+#     bank.delete_user()
+# ``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# #  this is final project of bank management ui function and colours and design
+
+import json
+import random
+import string
+from pathlib import Path
+import tkinter as tk
+from tkinter import ttk, messagebox
+
+class Bank:
+    __database = "data.json"
+    data = []
+
+    try:
+        if Path(__database).exists():
+            with open(__database) as fs:
+                data = json.loads(fs.read())
+    except Exception as err:
+        print(f"Error occurred: {err}")
+
+    @classmethod
+    def Generate_acc(cls):
+        alpha = random.choices(string.ascii_letters, k=4)
+        digit = random.choices(string.digits, k=8)
+        id = alpha + digit
+        random.shuffle(id)
+        return "".join(id)
+
+    @classmethod
+    def update_data(cls):
+        with open(cls.__database, 'w') as fs:
+            json.dump(cls.data, fs, indent=4)
+
+
+class BankUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Bank Management System")
+        self.root.geometry("950x600")
+        self.root.configure(bg="black")
+
+        # Title
+        title = tk.Label(
+            self.root, text="🏦 BANK MANAGEMENT SYSTEM",
+            font=("Segoe UI", 20, "bold"), fg="white", bg="black"
+        )
+        title.pack(pady=10)
+
+        # Frame
+        frame = tk.Frame(self.root, bg="black")
+        frame.pack(pady=10)
+
+        # Labels & Inputs
+        self.name_var = tk.StringVar()
+        self.email_var = tk.StringVar()
+        self.age_var = tk.StringVar()
+        self.phone_var = tk.StringVar()
+        self.pin_var = tk.StringVar()
+
+        labels = ["Name", "Email", "Age", "Phone", "PIN"]
+        vars_list = [self.name_var, self.email_var, self.age_var, self.phone_var, self.pin_var]
+
+        for i in range(len(labels)):
+            tk.Label(frame, text=labels[i], fg="white", bg="black", font=("Segoe UI", 12)).grid(row=i, column=0, padx=10, pady=6, sticky="w")
+            tk.Entry(frame, textvariable=vars_list[i], font=("Segoe UI", 12), bg="#222222", fg="white", insertbackground="white").grid(row=i, column=1, padx=10, pady=6)
+
+        # Buttons Frame
+        btn_frame = tk.Frame(self.root, bg="black")
+        btn_frame.pack(pady=15)
+
+        self.create_btn = tk.Button(btn_frame, text="Create Account", command=self.create_account, font=("Segoe UI", 12, "bold"), bg="#00BFFF", fg="black", width=16)
+        self.create_btn.grid(row=0, column=0, padx=5, pady=5)
+
+        self.deposit_btn = tk.Button(btn_frame, text="Deposit Money", command=self.deposit_money, font=("Segoe UI", 12, "bold"), bg="#00BFFF", fg="black", width=16)
+        self.deposit_btn.grid(row=0, column=1, padx=5, pady=5)
+
+        self.withdraw_btn = tk.Button(btn_frame, text="Withdraw Money", command=self.withdraw_money, font=("Segoe UI", 12, "bold"), bg="#00BFFF", fg="black", width=16)
+        self.withdraw_btn.grid(row=0, column=2, padx=5, pady=5)
+
+        self.details_btn = tk.Button(btn_frame, text="View Details", command=self.view_details, font=("Segoe UI", 12, "bold"), bg="#00BFFF", fg="black", width=16)
+        self.details_btn.grid(row=1, column=0, padx=5, pady=5)
+
+        self.update_btn = tk.Button(btn_frame, text="Update Account", command=self.update_user, font=("Segoe UI", 12, "bold"), bg="#00BFFF", fg="black", width=16)
+        self.update_btn.grid(row=1, column=1, padx=5, pady=5)
+
+        self.delete_btn = tk.Button(btn_frame, text="Delete Account", command=self.delete_user, font=("Segoe UI", 12, "bold"), bg="#00BFFF", fg="black", width=16)
+        self.delete_btn.grid(row=1, column=2, padx=5, pady=5)
+
+        # Table for showing accounts
+        self.tree = ttk.Treeview(self.root, columns=("Name", "Email", "Age", "Phone", "Account", "Balance"), show="headings", height=8)
+        for col in self.tree["columns"]:
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=150)
+        self.tree.pack(pady=20)
+
+        style = ttk.Style()
+        style.theme_use("clam")
+        style.configure("Treeview", background="black", foreground="white", fieldbackground="black")
+        style.configure("Treeview.Heading", background="#00BFFF", foreground="black", font=("Segoe UI", 11, "bold"))
+
+        self.refresh_table()
+
+    def refresh_table(self):
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+        for data in Bank.data:
+            self.tree.insert("", "end", values=(data["name"], data["email"], data["age"], data["phonenumber"], data["account"], data["balance"]))
+
+    def create_account(self):
+        name = self.name_var.get()
+        email = self.email_var.get()
+        age = self.age_var.get()
+        phone = self.phone_var.get()
+        pin = self.pin_var.get()
+
+        if not name or not email or not age or not phone or not pin:
+            messagebox.showerror("Error", "All fields are required")
+            return
+
+        if len(phone) != 10 or not phone.isdigit():
+            messagebox.showerror("Error", "Invalid phone number")
+            return
+        if len(pin) != 4 or not pin.isdigit():
+            messagebox.showerror("Error", "PIN must be 4 digits")
+            return
+
+        account = Bank.Generate_acc()
+        info = {
+            "name": name,
+            "email": email,
+            "age": int(age),
+            "phonenumber": phone,
+            "pin": pin,
+            "account": account,
+            "balance": 0
+        }
+        Bank.data.append(info)
+        Bank.update_data()
+        self.refresh_table()
+        messagebox.showinfo("Success", f"Account Created!\nAccount No: {account}")
+
+    def deposit_money(self):
+        self.transaction_window("Deposit")
+
+    def withdraw_money(self):
+        self.transaction_window("Withdraw")
+
+    def transaction_window(self, mode):
+        win = tk.Toplevel(self.root)
+        win.title(f"{mode} Money")
+        win.geometry("300x200")
+        win.configure(bg="black")
+
+        tk.Label(win, text="Enter Account No", fg="white", bg="black", font=("Segoe UI", 11)).pack(pady=5)
+        acc_var = tk.StringVar()
+        tk.Entry(win, textvariable=acc_var, font=("Segoe UI", 12), bg="#222222", fg="white", insertbackground="white").pack(pady=5)
+
+        tk.Label(win, text="Enter PIN", fg="white", bg="black", font=("Segoe UI", 11)).pack(pady=5)
+        pin_var = tk.StringVar()
+        tk.Entry(win, textvariable=pin_var, font=("Segoe UI", 12), bg="#222222", fg="white", insertbackground="white").pack(pady=5)
+
+        tk.Label(win, text="Enter Amount", fg="white", bg="black", font=("Segoe UI", 11)).pack(pady=5)
+        amt_var = tk.StringVar()
+        tk.Entry(win, textvariable=amt_var, font=("Segoe UI", 12), bg="#222222", fg="white", insertbackground="white").pack(pady=5)
+
+        def confirm():
+            acc = acc_var.get()
+            pin = pin_var.get()
+            amt = amt_var.get()
+
+            user = [u for u in Bank.data if u["account"] == acc and u["pin"] == pin]
+            if not user:
+                messagebox.showerror("Error", "Invalid Account or PIN")
+                return
+            user = user[0]
+
+            amt = int(amt)
+            if mode == "Deposit":
+                user["balance"] += amt
+            else:
+                if user["balance"] < amt:
+                    messagebox.showerror("Error", "Insufficient Balance")
+                    return
+                user["balance"] -= amt
+
+            Bank.update_data()
+            self.refresh_table()
+            messagebox.showinfo("Success", f"{mode} Successful!")
+            win.destroy()
+
+        tk.Button(win, text=mode, command=confirm, font=("Segoe UI", 12, "bold"), bg="#00BFFF", fg="black").pack(pady=10)
+
+    def view_details(self):
+        messagebox.showinfo("Accounts Info", json.dumps(Bank.data, indent=4))
+
+    def update_user(self):
+        messagebox.showinfo("Info", "Select an account from the table, then edit fields and click Create Account again.")
+
+    def delete_user(self):
+        selected = self.tree.selection()
+        if not selected:
+            messagebox.showerror("Error", "Select a row to delete")
+            return
+
+        account = self.tree.item(selected[0])["values"][4]
+        Bank.data = [u for u in Bank.data if u["account"] != account]
+        Bank.update_data()
+        self.refresh_table()
+        messagebox.showinfo("Success", "Account Deleted!")
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = BankUI(root)
+    root.mainloop()
+# ok final project no changes 
+
+
+
+
+
+
+
+
+
+
